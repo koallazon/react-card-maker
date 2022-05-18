@@ -1,20 +1,8 @@
 import "./app.css"
-
-function App() {
+import Login from './components/login/login'
+function App({authService}) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>hello</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Login authService={authService}/>
   )
 }
 
