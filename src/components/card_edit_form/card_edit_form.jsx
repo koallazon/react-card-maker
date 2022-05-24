@@ -15,7 +15,9 @@ const CardEditForm = ({ card }) => {
     fileURL,
   } = card;
   const onSubmit = () => {};
-  const onChange = () => {};
+  const onChange = (event) => {
+      console.log('onChange', event.target.value)
+  };
   return (
     <form className={styles.form}>
       <input 
@@ -38,9 +40,9 @@ const CardEditForm = ({ card }) => {
         value={theme}
         onChange={onChange}
       >
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
-        <option value="colorful">Colorful</option>
+        <option value="light">light</option>
+        <option value="dark">dark</option>
+        <option value="colorful">colorful</option>
       </select>
       <input 
         className={styles.input} 

@@ -46,7 +46,8 @@ const Maker = ({ authService }) => {
   };
 
   const addCard = card => {
-    console.log(card);
+    const updated = [...cards, card];
+    setCards(updated)
   };
 
   useEffect(() => {
