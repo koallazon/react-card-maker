@@ -9,7 +9,7 @@ import styles from './maker.module.css';
 const Maker = ({ authService }) => {
   const [cards, setCards] = useState([
     {
-      id: '1',
+      id: 1,
       name: '태규',
       company: 'bbangyatv',
       theme: 'light',
@@ -18,8 +18,8 @@ const Maker = ({ authService }) => {
       fileName: 'kaollazon',
       fileURL: null,
     },
-        {
-      id: '2',
+    {
+      id: 2,
       name: '호제3',
       company: 'bbangyatv',
       theme: 'light',
@@ -27,9 +27,9 @@ const Maker = ({ authService }) => {
       message: 'thanks you',
       fileName: 'kaollazon',
       fileURL: null,
-    }
-    ,    {
-      id: '1',
+    },
+    {
+      id: 3,
       name: '태규3',
       company: 'bbangyatv',
       theme: 'light',
@@ -40,15 +40,19 @@ const Maker = ({ authService }) => {
     }
 
   ]);
-  const history = useNavigate();
+  const navigate = useNavigate();
   const onLogout = () => {
     authService.logout();
+  };
+
+  const addCard = card => {
+    console.log(card);
   };
 
   useEffect(() => {
     authService.onAuthChange(user => {
       if (!user) {
-        history.push('/');
+        navigate('/');
       }
     });
   });
@@ -57,7 +61,7 @@ const Maker = ({ authService }) => {
     <section className={styles.maker}>
       <Header onLogout={onLogout} />
       <div className={styles.container}>
-        <Editor cards={cards} />
+        <Editor cards={cards} addCard={addCard} />
         <Preview cards={cards}/>
       </div>
       <Footer />

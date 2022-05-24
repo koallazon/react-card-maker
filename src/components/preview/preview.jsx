@@ -1,8 +1,15 @@
 import React from 'react';
+import Card from '../card/card'
 import styles from './preview.module.css';
 
-const Preview = ({ card }) => <section className={styles.preview}>
+const Preview = ({ cards }) => (
+  <section className={styles.preview}>
     <h1 className={styles.title}>Card Preview</h1>
-</section>;
-
+    <ul className={styles.cards}>
+      {cards.map((card, idx) => (
+        <Card card={card} key={idx} />
+      ))}
+    </ul>
+  </section>
+);
 export default Preview;
