@@ -45,9 +45,20 @@ const Maker = ({ authService }) => {
     authService.logout();
   };
 
-  const addCard = card => {
-    const updated = [...cards, card];
-    setCards(updated)
+  const createOrUpdateCard = card => {
+    setCards((card) => {
+      const updated = { ...cards };
+      updated[card.id] = card;
+      return updated
+    })
+  };
+
+  const deleteCard = card => {
+    setCards((card) => {
+      const updated = { ...cards };
+      delete updated[card.id];
+      return updated
+    })
   };
 
   useEffect(() => {
@@ -58,11 +69,12 @@ const Maker = ({ authService }) => {
     });
   });
 
+
   return (
     <section className={styles.maker}>
       <Header onLogout={onLogout} />
       <div className={styles.container}>
-        <Editor cards={cards} addCard={addCard} />
+        <Editor cards={cards} addCard={createOrUpdateCard} updateCard={createOrUpdateCard} deleteCard={deleteCard} />
         <Preview cards={cards}/>
       </div>
       <Footer />

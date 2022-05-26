@@ -3,7 +3,7 @@ import styles from './card_edit_form.module.css';
 import Button from '../button/button';
 import ImageFileInput from '../image_file_input/image_file_input';
 
-const CardEditForm = ({ card }) => {
+const CardEditForm = ({ card, updateCard, deleteCard }) => {
   const {
     name,
     company,
@@ -14,9 +14,20 @@ const CardEditForm = ({ card }) => {
     fileName,
     fileURL,
   } = card;
-  const onSubmit = () => {};
+  const onSubmit = () => {
+    deleteCard()
+  };
   const onChange = (event) => {
       console.log('onChange', event.target.value)
+      if (event.currentTarget == null) {
+        return;
+      }
+      event.preventDefault()
+      updateCard({
+        ...card,
+        [event.currentTarget.name]: event.currentTarget.value
+      })
+
   };
   return (
     <form className={styles.form}>
