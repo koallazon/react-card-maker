@@ -51,6 +51,8 @@ const Maker = ({ FileInput, authService }) => {
       const finded = updated.findIndex(v => v.id === card.id)
       if (finded > -1) {
         updated[finded] = card
+      } else {
+        updated.push(card)
       }
       return updated
     })
