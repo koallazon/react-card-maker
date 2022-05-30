@@ -6,7 +6,7 @@ import Editor from '../editor/editor'
 import Preview from '../preview/preview'
 import styles from './maker.module.css';
 
-const Maker = ({ authService }) => {
+const Maker = ({ FileInput, authService }) => {
   const [cards, setCards] = useState([
     {
       id: 1,
@@ -46,16 +46,19 @@ const Maker = ({ authService }) => {
   };
 
   const createOrUpdateCard = card => {
-    setCards((card) => {
-      const updated = { ...cards };
-      updated[card.id] = card;
+    setCards(() => {
+      const updated = [...cards];
+      const finded = updated.findIndex(v => v.id === card.id)
+      if (finded > -1) {
+        updated[finded] = card
+      }
       return updated
     })
   };
 
   const deleteCard = card => {
     setCards((card) => {
-      const updated = { ...cards };
+      const updated = {...cards};
       delete updated[card.id];
       return updated
     })
@@ -74,7 +77,7 @@ const Maker = ({ authService }) => {
     <section className={styles.maker}>
       <Header onLogout={onLogout} />
       <div className={styles.container}>
-        <Editor cards={cards} addCard={createOrUpdateCard} updateCard={createOrUpdateCard} deleteCard={deleteCard} />
+        <Editor FileInput={FileInput} cards={cards} addCard={createOrUpdateCard} updateCard={createOrUpdateCard} deleteCard={deleteCard} />
         <Preview cards={cards}/>
       </div>
       <Footer />

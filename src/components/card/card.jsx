@@ -8,7 +8,7 @@ const Card = ({ card }) => {
     // || DEFAULT_IMAGE
     return (
         <li className={`${styles.card} ${getStyles(theme)}`}>
-            <img 
+            <img
               className={styles.avatar} 
               src={url} alt="profile photo" 
             />

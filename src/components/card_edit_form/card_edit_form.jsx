@@ -1,9 +1,8 @@
 import React from 'react';
 import styles from './card_edit_form.module.css';
 import Button from '../button/button';
-import ImageFileInput from '../image_file_input/image_file_input';
 
-const CardEditForm = ({ card, updateCard, deleteCard }) => {
+const CardEditForm = ({ FileInput, card, updateCard, deleteCard }) => {
   const {
     name,
     company,
@@ -11,24 +10,31 @@ const CardEditForm = ({ card, updateCard, deleteCard }) => {
     email,
     message,
     theme,
-    fileName,
-    fileURL,
   } = card;
+
   const onSubmit = () => {
     deleteCard()
   };
-  const onChange = (event) => {
-      console.log('onChange', event.target.value)
-      if (event.currentTarget == null) {
-        return;
-      }
-      event.preventDefault()
-      updateCard({
-        ...card,
-        [event.currentTarget.name]: event.currentTarget.value
-      })
 
+  const onFileChange = file => {
+    updateCard({
+      ...card,
+      fileName: file.name,
+      fileURL: file.url
+    })
+  }
+
+   const onChange = event => {
+    if (event.currentTarget == null) {
+      return;
+    }
+    event.preventDefault();
+    updateCard({
+      ...card,
+      [event.currentTarget.name]: event.currentTarget.value,
+    });
   };
+
   return (
     <form className={styles.form}>
       <input 
@@ -76,7 +82,7 @@ const CardEditForm = ({ card, updateCard, deleteCard }) => {
         onChange={onChange}
       />
       <div className={styles.fileInput}>
-        <ImageFileInput />
+        <FileInput name={name} onFileChange={onFileChange}/>
       </div>
       <Button name="Delete" onClick={onSubmit} />
     </form>
