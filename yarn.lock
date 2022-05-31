@@ -4706,7 +4706,7 @@
     "locate-path" "^6.0.0"
     "path-exists" "^4.0.0"
 
-"firebase@7.20.0":
+"firebase@^7.20.0":
   "integrity" "sha512-ijgiUPB93UGWw2P2kgUQgghu5WOn/WR2J8C/V6ZSeI1PQqiEwsfn0kvw4iMJeqLQpA/FVeZz/+p0ubE5kzqhBA=="
   "resolved" "https://registry.npmjs.org/firebase/-/firebase-7.20.0.tgz"
   "version" "7.20.0"

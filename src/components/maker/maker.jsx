@@ -1,46 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import Header from '../header/header'
 import Footer from '../footer/footer'
 import Editor from '../editor/editor'
 import Preview from '../preview/preview'
 import styles from './maker.module.css';
 
-const Maker = ({ FileInput, authService }) => {
-  const [cards, setCards] = useState([
-    {
-      id: 1,
-      name: '태규',
-      company: 'bbangyatv',
-      theme: 'light',
-      email: 'koallazon@gmai.com',
-      message: 'thanks you',
-      fileName: 'kaollazon',
-      fileURL: null,
-    },
-    {
-      id: 2,
-      name: '호제3',
-      company: 'bbangyatv',
-      theme: 'light',
-      email: 'koallazon@gmai.com2',
-      message: 'thanks you',
-      fileName: 'kaollazon',
-      fileURL: null,
-    },
-    {
-      id: 3,
-      name: '태규3',
-      company: 'bbangyatv',
-      theme: 'light',
-      email: 'koallazon@gmai.com3',
-      message: 'thanks you',
-      fileName: 'kaollazon',
-      fileURL: null,
-    }
-
-  ]);
+const Maker = ({ FileInput, authService, cardRepository }) => {
+  const location = useLocation()
+  const [cards, setCards] = useState([]);
+  const [userId, setUserId] = useState(location && location.id)
   const navigate = useNavigate();
+  
   const onLogout = () => {
     authService.logout();
   };
@@ -56,6 +27,7 @@ const Maker = ({ FileInput, authService }) => {
       }
       return updated
     })
+    cardRepository.saveCard(userId, card)
   };
 
   const deleteCard = card => {
@@ -64,11 +36,25 @@ const Maker = ({ FileInput, authService }) => {
       delete updated[card.id];
       return updated
     })
+    cardRepository.removeCard(userId, card)
   };
+
+
+  useEffect(() => {
+    if (!userId) {
+      return
+    }
+    const stopSync = cardRepository.syncCard(userId, cards => {
+      setCards(cards)
+    })
+    return () => stopSync()
+  }, [userId]);
 
   useEffect(() => {
     authService.onAuthChange(user => {
-      if (!user) {
+      if (user) {
+        setUserId(user.uid)
+      } else {
         navigate('/');
       }
     });
